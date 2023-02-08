@@ -69,15 +69,15 @@
 
   <xacro:include filename="$(find omtp_support)/urdf/robot_pedestal/robot_pedestal.urdf.xacro"/>
   <xacro:robot_pedestal_urdf pedestal_prefix="robot1_" pedestal_parent="world_interface" pedestal_height="0.95">
-    <origin xyz="-3.3 11.5 0.0" rpy="0 0 0"/>
+    <origin xyz="-3.6 11.6 0.0" rpy="0 0 0"/>
   </xacro:robot_pedestal_urdf>
 
   <xacro:robot_pedestal_urdf pedestal_prefix="robot2_" pedestal_parent="world_interface" pedestal_height="0.95">
-    <origin xyz="-3.3 7.5 0.0" rpy="0 0 0"/>
+    <origin xyz="-3.6 7.6 0.0" rpy="0 0 0"/>
   </xacro:robot_pedestal_urdf>
 
   <xacro:robot_pedestal_urdf pedestal_prefix="robot3_" pedestal_parent="world_interface" pedestal_height="0.95">
-    <origin xyz="-1.5 10 0.0" rpy="0 0 0"/>
+    <origin xyz="-1.5 8 0.0" rpy="0 0 0"/>
   </xacro:robot_pedestal_urdf>
 
 
@@ -98,35 +98,35 @@
   <joint name="bin_1_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_1_base_link" />
-    <origin xyz="-4 11.2 0.0" rpy="0 0 0" />
+    <origin xyz="-2 12 0.0" rpy="0 0 0" />
   </joint>
 
   <!-- Bin 2 -->
   <joint name="bin_2_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_2_base_link" />
-    <origin xyz="-4 10.4 0.0" rpy="0 0 0" />
+    <origin xyz="-4.25 10.3 0.0" rpy="0 0 0" />
   </joint>
 
   <!-- Bin 3 -->
   <joint name="bin_3_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_3_base_link" />
-    <origin xyz="-4 9.6 0.0" rpy="0 0 0" />
+    <origin xyz="-4.2 9.0 0.0" rpy="0 0 0" />
   </joint>
 
   <!-- Bin 4 -->
   <joint name="bin_4_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_4_base_link" />
-    <origin xyz="-4 8.8 0.0" rpy="0 0 0" />
+    <origin xyz="-0.7 7.0 0.0" rpy="0 0 0" />
   </joint>
 
   <!-- Bin 5 -->
   <joint name="bin_5_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_5_base_link" />
-    <origin xyz="-4 8.0 0.0" rpy="0 0 0" />
+    <origin xyz="-4.0 7.0 0.0" rpy="0 0 ${-pi/2}" />
   </joint>
 
   <!-- ==================================================== -->
@@ -135,27 +135,41 @@
 
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_bypass_module/festo_bypass_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_bypass_1" festo_module_parent="world_interface">
-    <origin xyz="-3.2 11.65 0.0" rpy="0 0 0"/>
+    <origin xyz="-3.0 11.45 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
 
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_robot_1" festo_module_parent="world_interface">
-    <origin xyz="-1.2 10.5 0.0" rpy="0 0 0"/>
+    <origin xyz="-3.0 10.3 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_2" festo_module_parent="world_interface">
+    <origin xyz="-3.0 8.0 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
 
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
-  <xacro:festo_module_urdf module_prefix="festo_straight_1" festo_module_parent="world_interface">
-    <origin xyz="-2.0 9.0 0.0" rpy="0 0 0"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_3" festo_module_parent="world_interface">
+    <origin xyz="-3.0 9.15 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
   
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_4" festo_module_parent="world_interface">
+    <origin xyz="-3.0 10.30 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_t_module/festo_t_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_t_1" festo_module_parent="world_interface">
-    <origin xyz="-2.0 8.0 0.0" rpy="0 0 ${-pi/2}"/>
+    <origin xyz="-3.0 7.0 0.0" rpy="0 0 ${-pi/2}"/>
   </xacro:festo_module_urdf>
 
 
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_1" festo_module_parent="world_interface">
+    <origin xyz="-1.84 7.0 0.0" rpy="0 0 ${-pi/2}"/>
+  </xacro:festo_module_urdf>
 
 
 
 </robot>
-
