@@ -1,0 +1,161 @@
+<?xml version="1.0" ?>
+<robot name="omtp" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================================================== -->
+  <!-- INITIAL SETUP OF WORLD LINK AND WORLD_INTERFACE LINK -->
+  <!-- ==================================================== -->
+  <!-- world -->
+  <link name="world" />
+
+  <!-- world_interface. Makes it convenient to move the whole environment according to the world origin -->
+  <link name="world_interface"/>
+
+  <!-- world<->world_interface joint -->
+  <joint name="world_interface_to_world" type="fixed">
+    <parent link="world" />
+    <child link="world_interface" />
+  </joint>
+
+
+  <!-- ==================================================== -->
+  <!-- Fib14 building -->
+  <!-- ==================================================== -->
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/fib14/fib14.urdf.xacro"/>
+  <xacro:fib14_urdf fib14_parent="world_interface"/>
+
+
+  <!-- ==================================================== -->
+  <!-- Panda robots -->
+  <!-- ==================================================== -->
+  <!-- dual arm -->
+  <xacro:arg name="arm_id_1" default="panda_1" />
+  <xacro:arg name="arm_id_2" default="panda_2" />
+
+  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+
+  <!-- Panda 1 arm with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_1)" connected_to="robot1_pedestal_link"  xyz="0 0 0.95" safety_distance="0.03"/>
+  <xacro:hand ns="$(arg arm_id_1)" rpy="0 0 ${-pi/4}" connected_to="$(arg arm_id_1)_link8" safety_distance="0.03"/>
+
+  <!-- dual arm -->
+  <xacro:arg name="arm_id_3" default="panda_3" />
+  <xacro:arg name="arm_id_4" default="panda_4" />
+
+  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+
+  <!-- Panda 1 arm with gripper -->
+  <xacro:panda_arm arm_id="$(arg arm_id_3)" connected_to="robot2_pedestal_link"  xyz="0 0 0.95" safety_distance="0.03"/>
+  <xacro:hand ns="$(arg arm_id_3)" rpy="0 0 ${-pi/4}" connected_to="$(arg arm_id_3)_link8" safety_distance="0.03"/>
+
+  <!-- ==================================================== -->
+  <!-- UR robots -->
+  <!-- ==================================================== -->
+
+  <xacro:include filename="$(find ur_description)/urdf/inc/ur5_macro.xacro"/>
+  <xacro:ur5_robot prefix="robot3_"/>
+ 
+  <joint name="robot3-robot3_pedestal_joint" type="fixed">
+    <parent link="robot3_pedestal_link"/>
+    <child link="robot3_base_link"/>
+    <origin xyz="0 0 0.95" rpy="0 0 ${-pi/4}"/>
+  </joint>
+
+
+  <!-- ==================================================== -->
+  <!-- Robot 1,2 pedestal -->
+  <!-- ==================================================== -->
+
+  <xacro:include filename="$(find omtp_support)/urdf/robot_pedestal/robot_pedestal.urdf.xacro"/>
+  <xacro:robot_pedestal_urdf pedestal_prefix="robot1_" pedestal_parent="world_interface" pedestal_height="0.95">
+    <origin xyz="-3.3 11.5 0.0" rpy="0 0 0"/>
+  </xacro:robot_pedestal_urdf>
+
+  <xacro:robot_pedestal_urdf pedestal_prefix="robot2_" pedestal_parent="world_interface" pedestal_height="0.95">
+    <origin xyz="-3.3 7.5 0.0" rpy="0 0 0"/>
+  </xacro:robot_pedestal_urdf>
+
+  <xacro:robot_pedestal_urdf pedestal_prefix="robot3_" pedestal_parent="world_interface" pedestal_height="0.95">
+    <origin xyz="-1.5 10 0.0" rpy="0 0 0"/>
+  </xacro:robot_pedestal_urdf>
+
+
+
+
+
+  <!-- ==================================================== -->
+  <!-- Bins -->
+  <!-- ==================================================== -->
+  <xacro:include filename="$(find omtp_support)/urdf/bin/bin.urdf.xacro"/>
+  <xacro:bin_urdf prefix="bin_1"/>
+  <xacro:bin_urdf prefix="bin_2"/>
+  <xacro:bin_urdf prefix="bin_3"/>
+  <xacro:bin_urdf prefix="bin_4"/>
+  <xacro:bin_urdf prefix="bin_5"/>
+
+  <!-- Bin 1 -->
+  <joint name="bin_1_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_1_base_link" />
+    <origin xyz="-4 11.2 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Bin 2 -->
+  <joint name="bin_2_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_2_base_link" />
+    <origin xyz="-4 10.4 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Bin 3 -->
+  <joint name="bin_3_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_3_base_link" />
+    <origin xyz="-4 9.6 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Bin 4 -->
+  <joint name="bin_4_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_4_base_link" />
+    <origin xyz="-4 8.8 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Bin 5 -->
+  <joint name="bin_5_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_5_base_link" />
+    <origin xyz="-4 8.0 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- ==================================================== -->
+  <!-- Festo Modules -->
+  <!-- ==================================================== -->
+
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_bypass_module/festo_bypass_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_bypass_1" festo_module_parent="world_interface">
+    <origin xyz="-3.2 11.65 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_robot_1" festo_module_parent="world_interface">
+    <origin xyz="-1.2 10.5 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_1" festo_module_parent="world_interface">
+    <origin xyz="-2.0 9.0 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+  
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_t_module/festo_t_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_t_1" festo_module_parent="world_interface">
+    <origin xyz="-2.0 8.0 0.0" rpy="0 0 ${-pi/2}"/>
+  </xacro:festo_module_urdf>
+
+
+
+
+
+</robot>
+
