@@ -144,6 +144,7 @@
   </xacro:festo_module_urdf>
 
   
+  
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_straight_2" festo_module_parent="world_interface">
     <origin xyz="-3.0 8.0 0.0" rpy="0 0 0"/>
