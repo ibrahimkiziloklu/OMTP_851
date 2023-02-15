@@ -1,0 +1,34 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>omtp_support</name>
+  <version>0.0.2</version>
+  <description>The omtp_support package</description>
+
+  <maintainer email="sb@mp.aau.dk">Simon Bøgh</maintainer>
+  <license>TODO</license>
+
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>joint_state_publisher</build_depend>
+  <build_depend>robot_state_publisher</build_depend>
+  <build_depend>rviz</build_depend>
+  <build_depend>franka_description</build_depend>
+  <build_depend>xacro</build_depend>
+  <build_export_depend>joint_state_publisher</build_export_depend>
+  <build_export_depend>robot_state_publisher</build_export_depend>
+  <build_export_depend>rviz</build_export_depend>
+  <build_export_depend>franka_description</build_export_depend>
+  <build_export_depend>xacro</build_export_depend>
+  <exec_depend>joint_state_publisher</exec_depend>
+  <exec_depend>robot_state_publisher</exec_depend>
+  <exec_depend>rviz</exec_depend>
+  <exec_depend>franka_description</exec_depend>
+  <exec_depend>xacro</exec_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
