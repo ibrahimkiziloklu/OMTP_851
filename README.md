@@ -3,7 +3,7 @@ OBJECT MANIPULATION AND TASK PLANNING  (OMTP)  - Group 851 Assignments and Proje
 
 Including : 
 
-Main Xacro file of factory for lecture 1.
+Main Xacro file of factory for lecture 1 and lecture 2.
 PDF File for link graph.
 
 
@@ -12,20 +12,26 @@ Initial Setup :
 
 -Panda *2
 
--UR5 *1
+-4 Bottles to grab
 
 -Festo Modules ( T *1,Straight *2 , Robot *1 , Bypass *1)
 
 -Bin*5
 
+Deleted Setup : 
+ 
+-UR5 robot
+
 
 Dependencies : 
-To work the  main xacro file and launch file for simulation properly ,I will add all the dependencies afterwards.All the files  are in the omtp course files. Only extra file is the urdf file of UR5 robot.
+All the dependencies are the ones that Simon Bøgh mensions.(the necessary lib names will be added afterwards.) 
+
 
 Future Work : 
--Better Configuration
--Mobile Manipulators 
--Objects to grab
+
+-ROBOT MANIPULATOR VISUALISATON PROBLEM
+-Better Configuration for objects in factory
+-Objects to grab(added,bottle)
 
 
 Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
