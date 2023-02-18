@@ -35,4 +35,7 @@ Future Work :
 
 
 Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
+         Kutay Shentyurk
+  	      Mahed Dadgostar
+  	      Victor Hagbard Bjørholm
 
