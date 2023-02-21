@@ -17,6 +17,16 @@ hardware_interface:
     - panda_1_joint6
     - panda_1_joint7
     - panda_1_finger_joint1
+    - panda_1_finger_joint2
+    - panda_2_joint1
+    - panda_2_joint2
+    - panda_2_joint3
+    - panda_2_joint4
+    - panda_2_joint5
+    - panda_2_joint6
+    - panda_2_joint7
+    - panda_2_finger_joint1
+    - panda_2_finger_joint2
   sim_control_mode: 1  # 0: position, 1: velocity
 # Publish all joint states
 # Creates the /joint_states topic necessary in ROS
@@ -41,7 +51,27 @@ controller_list:
     default: True
     type: FollowJointTrajectory
     joints:
-      panda_1_finger_joint1
+      - panda_1_finger_joint1
+      - panda_1_finger_joint2
+  - name: panda_arm_2_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - panda_2_joint1
+      - panda_2_joint2
+      - panda_2_joint3
+      - panda_2_joint4
+      - panda_2_joint5
+      - panda_2_joint6
+      - panda_2_joint7
+  - name: panda_hand_2_controller
+    action_ns: follow_joint_trajectory
+    default: True
+    type: FollowJointTrajectory
+    joints:
+      - panda_2_finger_joint1
+      - panda_2_finger_joint2
 panda_arm_controller:
   type: effort_controllers/JointTrajectoryController
   joints:
@@ -91,9 +121,77 @@ panda_arm_controller:
 panda_hand_controller:
   type: effort_controllers/JointTrajectoryController
   joints:
-    panda_1_finger_joint1
+    - panda_1_finger_joint1
+    - panda_1_finger_joint2
   gains:
     panda_1_finger_joint1:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_1_finger_joint2:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+panda_arm_2_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - panda_2_joint1
+    - panda_2_joint2
+    - panda_2_joint3
+    - panda_2_joint4
+    - panda_2_joint5
+    - panda_2_joint6
+    - panda_2_joint7
+  gains:
+    panda_2_joint1:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_joint2:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_joint3:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_joint4:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_joint5:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_joint6:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_joint7:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+panda_hand_2_controller:
+  type: effort_controllers/JointTrajectoryController
+  joints:
+    - panda_2_finger_joint1
+    - panda_2_finger_joint2
+  gains:
+    panda_2_finger_joint1:
+      p: 100
+      d: 1
+      i: 1
+      i_clamp: 1
+    panda_2_finger_joint2:
       p: 100
       d: 1
       i: 1

@@ -8,6 +8,8 @@
   <node name="controller_spawner" pkg="controller_manager" type="spawner" respawn="false"
     output="screen" args="panda_arm_controller
                           panda_hand_controller
+                          panda_arm_2_controller
+                          panda_hand_2_controller
                           joint_state_controller "/>
 
 </launch>

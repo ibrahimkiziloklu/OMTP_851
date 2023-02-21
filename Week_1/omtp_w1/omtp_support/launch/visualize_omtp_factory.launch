@@ -4,7 +4,7 @@
   <arg name="gui" default="true" />
 
   <!-- Load  omtp factory to the parameter server under 'robot_description' -->
-  <param name="robot_description" command="$(find xacro)/xacro '$(find omtp_support)/urdf/omtp_factory.xacro'" />
+  <param name="robot_description" command="$(find xacro)/xacro '$(find omtp_support)/urdf/omtp_factory_fd.xacro'" />
 
   <!-- Publish robot states -->
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher"/>
