@@ -29,9 +29,9 @@ All the dependencies are the ones that Simon Bøgh mensions.(the necessary lib n
 
 Future Work : 
 
--ROBOT MANIPULATOR VISUALISATON PROBLEM
+-ROBOT MANIPULATOR VISUALISATON PROBLEM(solved)
 -Better Configuration for objects in factory
--Objects to grab(added,bottle)
+-Objects to grab(added,bottle,box needs to be added.)
 
 
 Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
