@@ -84,38 +84,38 @@ panda_arm_controller:
     - panda_1_joint7
   gains:
     panda_1_joint1:
-      p: 100
-      d: 1
+      p: 12000
+      d: 100
       i: 1
       i_clamp: 1
     panda_1_joint2:
-      p: 100
-      d: 1
+      p: 18000
+      d: 100
       i: 1
       i_clamp: 1
     panda_1_joint3:
-      p: 100
-      d: 1
+      p: 18000
+      d: 100
       i: 1
       i_clamp: 1
     panda_1_joint4:
-      p: 100
-      d: 1
+      p: 12000
+      d: 100
       i: 1
       i_clamp: 1
     panda_1_joint5:
-      p: 100
-      d: 1
+      p: 12000
+      d: 100
       i: 1
       i_clamp: 1
     panda_1_joint6:
-      p: 100
-      d: 1
+      p: 7000
+      d: 100
       i: 1
       i_clamp: 1
     panda_1_joint7:
-      p: 100
-      d: 1
+      p: 2000
+      d: 100
       i: 1
       i_clamp: 1
 panda_hand_controller:
@@ -146,38 +146,38 @@ panda_arm_2_controller:
     - panda_2_joint7
   gains:
     panda_2_joint1:
-      p: 100
-      d: 1
+      p: 12000
+      d: 100
       i: 1
       i_clamp: 1
     panda_2_joint2:
-      p: 100
-      d: 1
+      p: 18000
+      d: 100
       i: 1
       i_clamp: 1
     panda_2_joint3:
-      p: 100
-      d: 1
+      p: 18000
+      d: 100
       i: 1
       i_clamp: 1
     panda_2_joint4:
-      p: 100
-      d: 1
+      p: 12000
+      d: 100
       i: 1
       i_clamp: 1
     panda_2_joint5:
-      p: 100
-      d: 1
+      p: 12000
+      d: 100
       i: 1
       i_clamp: 1
     panda_2_joint6:
-      p: 100
-      d: 1
+      p: 7000
+      d: 100
       i: 1
       i_clamp: 1
     panda_2_joint7:
-      p: 100
-      d: 1
+      p: 2000
+      d: 100
       i: 1
       i_clamp: 1
 panda_hand_2_controller:

@@ -34,9 +34,9 @@ def simple_pick_place():
     #Used to plan and execute motions.
     #########################################
     robot_arm_group = moveit_commander.MoveGroupCommander("panda_arm")
-    robot_hand_group = moveit_commander.MoveGroupCommander("panda_tool")
-    robot_arm_2_group = moveit_commander.MoveGroupCommander("panda_arm_2")
-    robot_hand_2_group = moveit_commander.MoveGroupCommander("panda_tool_2")
+    #robot_hand_group = moveit_commander.MoveGroupCommander("panda_tool")
+    #robot_arm_2_group = moveit_commander.MoveGroupCommander("panda_arm_2")
+    #robot_hand_2_group = moveit_commander.MoveGroupCommander("panda_tool_2")
 
     #########################################
     #Action clients to the ExecuteTrajectory action server .
