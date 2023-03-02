@@ -33,7 +33,7 @@
   <!-- ==================================================== -->
   <!-- We do not have a robot connected, so publish fake joint states -->
   <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher">
-    <rosparam param="source_list">[/joint_states]</rosparam>
+    <rosparam param="source_list">[/panda_1/joint_states,/panda_2/joint_states]</rosparam>
   </node>
   <node name="joint_state_desired_publisher" pkg="topic_tools" type="relay" args="joint_states joint_states_desired" />
 

@@ -37,8 +37,6 @@
   <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
   <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
 
-
-
   <!-- Panda robot 1  with gripper -->
   <xacro:panda_arm arm_id="$(arg arm_id_1)"
                    connected_to="robot1_pedestal_link"
@@ -146,11 +144,11 @@
   </joint>
 
   <!-- Bin 5 -->
-  <joint name="bin_5_joint" type="fixed">
+  <!--joint name="bin_5_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_5_base_link" />
     <origin xyz="-4.0 7.0 0.0" rpy="0 0 ${-pi/2}" />
-  </joint>
+  </joint-->
 
 
   <!-- ==================================================== -->
@@ -158,21 +156,16 @@
   <!-- ==================================================== -->
   <xacro:include filename="$(find omtp_support)/urdf/bottle/bottle.urdf.xacro"/>
 
-
-
-
-  <xacro:bottle_urdf module_prefix="bottle_1" module_parent="world_interface">
+  <!--xacro:bottle_urdf module_prefix="bottle_1" module_parent="world_interface">
     <origin xyz="-3.0 8.3 0.95" rpy="0 0 0"/>
-  </xacro:bottle_urdf>
-
-
+  </xacro:bottle_urdf-->
   <xacro:bottle_urdf module_prefix="bottle_3" module_parent="world_interface">
     <origin xyz="-3.0 11.4 0.95" rpy="0 0 0"/>
   </xacro:bottle_urdf>
   <xacro:bottle_urdf module_prefix="bottle_4" module_parent="world_interface">
     <origin xyz="-3.0 11.7 0.95" rpy="0 0 0"/>
   </xacro:bottle_urdf>
-
+ 
 
 
   <!-- ==================================================== -->
@@ -184,10 +177,10 @@
     <origin xyz="-3.0 11.45 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
 
-  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
+  <!-- xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_robot_1" festo_module_parent="world_interface">
     <origin xyz="-3.0 10.3 0.0" rpy="0 0 0"/>
-  </xacro:festo_module_urdf>
+  </xacro:festo_module_urdf-->
 
   
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
@@ -309,7 +302,7 @@
         <frameName>camera_link_optical</frameName>
         <!-- setting hackBaseline to anything but 0.0 will cause a misalignment
             between the gazebo sensor image and the frame it is supposed to
-            be attached to -->
+            be attached to --> 
         <hackBaseline>0.0</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>

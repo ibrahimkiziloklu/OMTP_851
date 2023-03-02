@@ -40,12 +40,48 @@ from omtp_lecture3.msg import LogicalCameraImage
 import tf2_ros
 import tf2_geometry_msgs
 import geometry_msgs
+import sys
+import copy
+
+import moveit_commander
+import moveit_msgs.msg
+import actionlib
+
 
 
 def logical_camera_callback(data):
     # Check if the logical camera has seen our box which has the name 'object'.
     for gazebo_object in data.models:
         if (gazebo_object.type == 'box'):
+
+            moveit_commander.roscpp_initialize(sys.argv)
+
+            # groups
+            robot_arm_group = moveit_commander.MoveGroupCommander("panda_arm")
+            #robot_hand_group = moveit_commander.MoveGroupCommander("hand")
+
+
+            # action-client
+            robot_arm_client = actionlib.SimpleActionClient(
+                'execute_trajectory', moveit_msgs.msg.ExecuteTrajectoryAction)
+            robot_arm_client.wait_for_server()
+            rospy.loginfo("Execute trajectory server is available for robot_arm")
+
+
+            # robot_arm_group.set_named_target("robot_up")
+            # robot_arm_plan_home = robot_arm_group.plan()
+            # robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            # robot_arm_goal.trajectory = robot_arm_plan_home
+            # robot_arm_client.send_goal(robot_arm_goal)
+            # robot_arm_client.wait_for_result()
+
+            robot_arm_group.set_named_target("robot_ready")
+            robot_arm_plan_pregrasp = robot_arm_group.plan()
+            robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_arm_goal.trajectory = robot_arm_plan_pregrasp
+            robot_arm_client.send_goal(robot_arm_goal)
+            robot_arm_client.wait_for_result()
+
             # Create a pose stamped message type from the camera image topic.
             object_pose = geometry_msgs.msg.PoseStamped()
             # Only works with a timestamp, timing information is very important in tf
@@ -61,19 +97,71 @@ def logical_camera_callback(data):
             object_pose.pose.orientation.y = gazebo_object.pose.orientation.y
             object_pose.pose.orientation.z = gazebo_object.pose.orientation.z
             object_pose.pose.orientation.w = gazebo_object.pose.orientation.w
+            
             while True:
                 try:
                     object_world_pose = tf_buffer.transform(object_pose, "world")
                     break
-                except (tf2_ros.LookupException, tf2_ros.ConnectivityException, tf2_ros.ExtrapolationException):
+                except (tf2_ros.LookupException, tf2_ros.ConnectivityException,
+                         tf2_ros.ExtrapolationException):
                     continue
+
+            
             print('========================================')
             print('Pose of the object in the world reference frame is: %s', object_world_pose)
             print('========================================')
             print('Pose of the object in the logical camera reference frame is: %s', object_pose)
             print('========================================')
             print('Successfully transformed pose.')
-            rospy.signal_shutdown('Successfully transformed pose.')
+
+            # cartesian coordinates
+            waypoints = []
+
+            current_pose = robot_arm_group.get_current_pose()
+            rospy.sleep(0.5)
+            current_pose = robot_arm_group.get_current_pose()
+
+            new_eef_pose = geometry_msgs.msg.Pose()
+            new_eef_pose.position.x = object_world_pose.pose.position.x
+            new_eef_pose.position.y = object_world_pose.pose.position.y
+            new_eef_pose.position.z = object_world_pose.pose.position.z
+
+            new_eef_pose.orientation = copy.deepcopy(current_pose.pose.orientation)
+
+            waypoints.append(new_eef_pose)
+            waypoints.append(current_pose.pose)
+            print(new_eef_pose.orientation)
+            print(current_pose.pose.position)
+
+            fraction = 0.0
+            for count_cartesian_path in range(3):
+                if fraction < 1.0:
+                    plan_cartesian, fraction = robot_arm_group.compute_cartesian_path(
+                        waypoints,
+                        0.01, # eef_step
+                        0.0   #jump threshold
+                    )
+                else:
+                    break
+            
+            robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_arm_goal.trajectory = plan_cartesian
+            robot_arm_client.send_goal(robot_arm_goal)
+            robot_arm_client.wait_for_result()
+            print("ok")
+
+            # robot_arm_group.set_named_target("robot_ready")
+            # robot_arm_plan_place = robot_arm_group.plan()
+            # robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            # robot_arm_goal.trajectory = robot_arm_plan_place
+
+            # robot_arm_client.send_goal(robot_arm_goal)
+            # robot_arm_client.wait_for_result()
+
+            moveit_commander.roscpp_shutdown()
+
+
+            rospy.signal_shutdown('Successfully rreached the goal.')
             print('========================================')
         else:
             # Do nothing.
@@ -97,3 +185,4 @@ if __name__ == '__main__':
                      LogicalCameraImage, logical_camera_callback)
 
     rospy.spin()
+
