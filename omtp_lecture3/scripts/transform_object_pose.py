@@ -57,8 +57,8 @@ def logical_camera_callback(data):
             moveit_commander.roscpp_initialize(sys.argv)
 
             # groups
-            robot_arm_group = moveit_commander.MoveGroupCommander("panda_arm")
-            #robot_hand_group = moveit_commander.MoveGroupCommander("hand")
+            robot_arm_group = moveit_commander.MoveGroupCommander("robot_arm")
+            robot_hand_group = moveit_commander.MoveGroupCommander("robot_hand")
 
 
             # action-client
@@ -76,7 +76,7 @@ def logical_camera_callback(data):
             # robot_arm_client.wait_for_result()
 
             robot_arm_group.set_named_target("robot_ready")
-            robot_arm_plan_pregrasp = robot_arm_group.plan()
+            plan_success, robot_arm_plan_pregrasp, planning_time, error_code = robot_arm_group.plan()
             robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
             robot_arm_goal.trajectory = robot_arm_plan_pregrasp
             robot_arm_client.send_goal(robot_arm_goal)
@@ -93,12 +93,13 @@ def logical_camera_callback(data):
             object_pose.pose.position.x = gazebo_object.pose.position.x
             object_pose.pose.position.y = gazebo_object.pose.position.y
             object_pose.pose.position.z = gazebo_object.pose.position.z
+            
             object_pose.pose.orientation.x = gazebo_object.pose.orientation.x
             object_pose.pose.orientation.y = gazebo_object.pose.orientation.y
             object_pose.pose.orientation.z = gazebo_object.pose.orientation.z
             object_pose.pose.orientation.w = gazebo_object.pose.orientation.w
-            
-            while True:
+            cond = True
+            while cond:
                 try:
                     object_world_pose = tf_buffer.transform(object_pose, "world")
                     break
@@ -130,8 +131,6 @@ def logical_camera_callback(data):
 
             waypoints.append(new_eef_pose)
             waypoints.append(current_pose.pose)
-            print(new_eef_pose.orientation)
-            print(current_pose.pose.position)
 
             fraction = 0.0
             for count_cartesian_path in range(3):
@@ -185,4 +184,3 @@ if __name__ == '__main__':
                      LogicalCameraImage, logical_camera_callback)
 
     rospy.spin()
-

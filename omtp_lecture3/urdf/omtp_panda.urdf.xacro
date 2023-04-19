@@ -27,91 +27,49 @@
   <!-- Panda robot setup                                    -->
   <!-- ==================================================== -->
   <!-- Panda parameters -->
-  <xacro:arg name="arm_id_1" default="panda_1" />
-  <xacro:arg name="arm_id_2" default="panda_2" />
-  <xacro:arg name="use_cylinder_collision_model" default="false"/>
+  <xacro:arg name="arm_id" default="panda"/>
+  <xacro:arg name="use_cylinder_collision_model" default="true"/>
   <xacro:arg name="use_gazebo_sim" default="true"/>
   <xacro:arg name="parent" default="world_interface"/>
 
-  <!-- Franka arm and hand XACRO model -->
-  <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
-  <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
-
-  <!-- Panda robot 1  with gripper -->
-  <xacro:panda_arm arm_id="$(arg arm_id_1)"
+  <!-- Insert Panda robot -->
+  <xacro:include filename="$(find franka_description)/robots/panda_arm_hand.urdf.xacro"/>
+  <xacro:panda_arm arm_id="$(arg arm_id)"
                    connected_to="robot1_pedestal_link"
                     xyz="0 0 0.95"
                     rpy="0 0 0"
-                    safety_distance="0.03"
-                    use_cylinder_collision_model="false"/>
+                    safety_distance="0.03"/>
 
-  <xacro:hand ns="$(arg arm_id_1)"
+  <xacro:hand ns="$(arg arm_id)"
               rpy="0 0 ${-pi/4}" 
-              connected_to="$(arg arm_id_1)_link8"
-              safety_distance="0.03"
-              use_cylinder_collision_model="false"/>
+              connected_to="$(arg arm_id)_link8"
+              safety_distance="0.03"/>
 
-  <!-- Panda robot 2  with gripper -->
-  <xacro:panda_arm arm_id="$(arg arm_id_2)"
-                   connected_to="robot2_pedestal_link"
-                   xyz="0 0 0.95" 
-                   safety_distance="0.03"
-                   use_cylinder_collision_model="false"/>
-
-  <xacro:hand ns="$(arg arm_id_2)"
-              rpy="0 0 ${-pi/4}"
-              connected_to="$(arg arm_id_2)_link8"
-              safety_distance="0.03"
-              use_cylinder_collision_model="false"/>
-
-  <!-- Gazebo control for Franka -->
+  <!--Gazebo Control for Franka -->
   <xacro:include filename="$(find franka_description)/robots/panda.gazebo.xacro"/>
   <xacro:include filename="$(find franka_description)/robots/panda.control.xacro"/>
-
-
-  <!-- robot 1 gazebo -->
-  <!--     arm     -->
-  <xacro:arm_gazebo arm_id="$(arg arm_id_1)"/>
-  <xacro:arm_control arm_id="$(arg arm_id_1)"/>
-  <!--     hand    -->
-  <xacro:hand_gazebo arm_id="$(arg arm_id_1)"/>
-  <xacro:hand_control arm_id="$(arg arm_id_1)"/>
-
-  <!-- robot 2 gazebo -->
-  <!--     arm     -->
-  <xacro:arm_gazebo arm_id="$(arg arm_id_2)"/>
-  <xacro:arm_control arm_id="$(arg arm_id_2)"/>
-  <!--     hand    -->
-  <xacro:hand_gazebo arm_id="$(arg arm_id_2)"/>
-  <xacro:hand_control arm_id="$(arg arm_id_2)"/>
+  
+  <!-- arm -->
+  <xacro:arm_gazebo arm_id="$(arg arm_id)"/>
+  <xacro:arm_control arm_id="$(arg arm_id)"/>
+  <!-- hand-->
+  <xacro:hand_gazebo arm_id="$(arg arm_id)"/>
+  <xacro:hand_control arm_id="$(arg arm_id)"/>
 
   <gazebo>
       <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
   </gazebo>
 
 
-  <!-- ==================================================== -->
-  <!-- Robot 1,2 pedestal -->
-  <!-- ==================================================== -->
-
+  <!-- ROBOT PEDESTAL -->
   <xacro:include filename="$(find omtp_support)/urdf/robot_pedestal/robot_pedestal.urdf.xacro"/>
   <xacro:robot_pedestal_urdf pedestal_prefix="robot1_" pedestal_parent="world_interface" pedestal_height="0.95">
-    <origin xyz="-3.6 11.6 0.0" rpy="0 0 0"/>
+    <origin xyz="-0.6 11.5 0.0" rpy="0 0 0"/>
   </xacro:robot_pedestal_urdf>
 
-  <xacro:robot_pedestal_urdf pedestal_prefix="robot2_" pedestal_parent="world_interface" pedestal_height="0.95">
-    <origin xyz="-3.6 7.6 0.0" rpy="0 0 0"/>
-  </xacro:robot_pedestal_urdf>
-
-
-
-  <!-- ==================================================== -->
   <!-- Bins -->
-  <!-- ==================================================== -->
   <xacro:include filename="$(find omtp_support)/urdf/bin/bin.urdf.xacro"/>
   <xacro:bin_urdf prefix="bin_1"/>
-  <xacro:bin_urdf prefix="bin_2"/>
-  <xacro:bin_urdf prefix="bin_3"/>
   <xacro:bin_urdf prefix="bin_4"/>
   <xacro:bin_urdf prefix="bin_5"/>
 
@@ -119,98 +77,56 @@
   <joint name="bin_1_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_1_base_link" />
-    <origin xyz="-2 12 0.0" rpy="0 0 0" />
-  </joint>
-
-  <!-- Bin 2 -->
-  <joint name="bin_2_joint" type="fixed">
-    <parent link="world_interface" />
-    <child link="bin_2_base_link" />
-    <origin xyz="-4.25 10.3 0.0" rpy="0 0 0" />
-  </joint>
-
-  <!-- Bin 3 -->
-  <joint name="bin_3_joint" type="fixed">
-    <parent link="world_interface" />
-    <child link="bin_3_base_link" />
-    <origin xyz="-4.2 9.0 0.0" rpy="0 0 0" />
+    <origin xyz="-1.5 10.4 0.0" rpy="0 0 0" />
   </joint>
 
   <!-- Bin 4 -->
   <joint name="bin_4_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_4_base_link" />
-    <origin xyz="-0.7 7.0 0.0" rpy="0 0 0" />
+    <origin xyz="-2.3 7.4 0.0" rpy="0 0 0" />
   </joint>
 
   <!-- Bin 5 -->
-  <!--joint name="bin_5_joint" type="fixed">
+  <joint name="bin_5_joint" type="fixed">
     <parent link="world_interface" />
     <child link="bin_5_base_link" />
-    <origin xyz="-4.0 7.0 0.0" rpy="0 0 ${-pi/2}" />
-  </joint-->
+    <origin xyz="0.0 12.2 0.0" rpy="0 0 ${-pi/2}" />
+  </joint>
 
 
-  <!-- ==================================================== -->
-  <!-- Bottle -->
-  <!-- ==================================================== -->
-  <xacro:include filename="$(find omtp_support)/urdf/bottle/bottle.urdf.xacro"/>
-
-  <!--xacro:bottle_urdf module_prefix="bottle_1" module_parent="world_interface">
-    <origin xyz="-3.0 8.3 0.95" rpy="0 0 0"/>
-  </xacro:bottle_urdf-->
-  <xacro:bottle_urdf module_prefix="bottle_3" module_parent="world_interface">
-    <origin xyz="-3.0 11.4 0.95" rpy="0 0 0"/>
-  </xacro:bottle_urdf>
-  <xacro:bottle_urdf module_prefix="bottle_4" module_parent="world_interface">
-    <origin xyz="-3.0 11.7 0.95" rpy="0 0 0"/>
-  </xacro:bottle_urdf>
- 
-
-
-  <!-- ==================================================== -->
   <!-- Festo Modules -->
-  <!-- ==================================================== -->
-
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_bypass_module/festo_bypass_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_bypass_1" festo_module_parent="world_interface">
-    <origin xyz="-3.0 11.45 0.0" rpy="0 0 0"/>
+    <origin xyz="0.0 11.25 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
 
-  <!-- xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_robot_1" festo_module_parent="world_interface">
-    <origin xyz="-3.0 10.3 0.0" rpy="0 0 0"/>
-  </xacro:festo_module_urdf-->
-
+    <origin xyz="0.0 10.0 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
   
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_straight_1" festo_module_parent="world_interface">
-    <origin xyz="-3.0 8.0 0.0" rpy="0 0 0"/>
+    <origin xyz="0.0 8.75 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
 
-   <xacro:festo_module_urdf module_prefix="festo_straight_2" festo_module_parent="world_interface">
-    <origin xyz="-3.0 9.15 0.0" rpy="0 0 0"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_4" festo_module_parent="world_interface">
+    <origin xyz="-1.25 7.5 0.0" rpy="0 0 ${-pi/2}"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:festo_module_urdf module_prefix="festo_straight_2" festo_module_parent="world_interface">
+    <origin xyz="-0.0 6.25 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
   
   <xacro:festo_module_urdf module_prefix="festo_straight_3" festo_module_parent="world_interface">
-    <origin xyz="-3.0 10.30 0.0" rpy="0 0 0"/>
+    <origin xyz="0.0 5.0 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
 
   <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_t_module/festo_t_module.urdf.xacro"/>
   <xacro:festo_module_urdf module_prefix="festo_t_1" festo_module_parent="world_interface">
-    <origin xyz="-3.0 7.0 0.0" rpy="0 0 ${-pi/2}"/>
+    <origin xyz="0.0 7.5 0.0" rpy="0 0 0"/>
   </xacro:festo_module_urdf>
-
-
-  <xacro:festo_module_urdf module_prefix="festo_straight_4" festo_module_parent="world_interface">
-    <origin xyz="-1.84 7.0 0.0" rpy="0 0 ${-pi/2}"/>
-  </xacro:festo_module_urdf>
-
-
-
-
-
-
 
   <!-- ==================================================== -->
   <!-- 2D camera for Gazebo                                 -->
@@ -302,7 +218,7 @@
         <frameName>camera_link_optical</frameName>
         <!-- setting hackBaseline to anything but 0.0 will cause a misalignment
             between the gazebo sensor image and the frame it is supposed to
-            be attached to --> 
+            be attached to -->
         <hackBaseline>0.0</hackBaseline>
         <distortionK1>0.0</distortionK1>
         <distortionK2>0.0</distortionK2>
@@ -314,13 +230,9 @@
         <Cy>0.0</Cy>
         <focalLength>0.0</focalLength>
       </plugin>
+
     </sensor>
+  
   </gazebo>
-
-
-
-
-
-
 
 </robot>

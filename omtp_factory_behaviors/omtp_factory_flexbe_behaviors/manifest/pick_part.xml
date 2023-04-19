@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Pick part">
+
+	<executable package_path="omtp_factory_flexbe_behaviors.pick_part_sm" class="PickpartSM" />
+	<tagstring>robot,pick</tagstring>
+	<author>Simon</author>
+	<date>Wed Feb 23 2022</date>
+	<description>
+		New behavior
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

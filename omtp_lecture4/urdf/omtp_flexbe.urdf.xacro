@@ -1,0 +1,38 @@
+<?xml version="1.0" ?>
+<robot name="omtp"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================================================== -->
+  <!-- INITIAL SETUP OF WORLD LINK                          -->
+  <!-- ==================================================== -->
+  <!-- world -->
+  <link name="world" />
+
+  <!-- world_interface. Makes it convenient to move the whole environment according to the world origin -->
+  <link name="world_interface"/>
+
+  <!-- world<->world_interface joint -->
+  <joint name="world_interface_to_world" type="fixed">
+    <parent link="world" />
+    <child link="world_interface" />
+  </joint>
+
+  <!-- ==================================================== -->
+  <!-- Fib14 building -->
+  <!-- ==================================================== -->
+  <!-- <xacro:include filename="$(find aau_lab_ros_models)/urdf/fib14/fib14.urdf.xacro"/>
+  <xacro:fib14_urdf fib14_parent="world_interface"/> -->
+
+  <!-- ==================================================== -->
+  <!-- Panda robot setup                                    -->
+  <!-- ==================================================== -->
+  <!-- Panda parameters -->
+  <xacro:arg name="arm_id" default="panda"/>
+  <xacro:arg name="use_cylinder_collision_model" default="false"/>
+  <xacro:arg name="use_gazebo_sim" default="true"/>
+  <xacro:arg name="parent" default="world_interface"/>
+
+  <!-- Insert Panda robot -->
+  <xacro:include filename="$(find franka_description)/robots/panda_arm_hand.urdf.xacro"/>
+
+</robot>

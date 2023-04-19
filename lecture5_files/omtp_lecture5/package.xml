@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>omtp_lecture5</name>
+  <version>0.0.0</version>
+  <description>The omtp_lecture8 package</description>
+
+  <maintainer email="sb@mp.aau.dk">Simon Bøgh</maintainer>
+
+  <license>TODO</license>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <exec_depend>rospy</exec_depend>
+
+  <depend>gazebo_ros</depend>
+  <!-- <depend>gazebo_plugins</depend> -->
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <gazebo_ros gazebo_media_path="${prefix}" />
+    <gazebo_ros gazebo_model_path="${prefix}/models" />
+  </export>
+
+</package>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="Move robot to two poses">
+
+	<executable package_path="omtp_factory_flexbe_behaviors.move_robot_to_two_poses_sm" class="MoverobottotwoposesSM" />
+	<tagstring>panda,move</tagstring>
+	<author>Simon Bogh</author>
+	<date>Fri Mar 19 2021</date>
+	<description>
+		This behavior will move the Franka robot to two poses
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>

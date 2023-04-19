@@ -1,0 +1,12 @@
+scikit-image
+numpy
+scipy
+torch>=0.4.0
+torchvision
+pillow
+matplotlib
+
+future
+pyyaml
+empy
+opencv-python

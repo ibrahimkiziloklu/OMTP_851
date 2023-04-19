@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<behavior name="pick up part from conveyor">
+
+	<executable package_path="omtp_factory_flexbe_behaviors.pick_up_part_from_conveyor_sm" class="pickuppartfromconveyorSM" />
+	<tagstring>omtp, panda arm, pick</tagstring>
+	<author>Kutay Shentyurk</author>
+	<date>Wed Mar 15 2023</date>
+	<description>
+		an hello work pick and move to home1
+	</description>
+
+
+	<!-- Contained Behaviors -->
+
+	<!-- Available Parameters -->
+
+</behavior>
