@@ -50,11 +50,11 @@ class pickuppartfromconveyorSM(Behavior):
 		home1 = [0, 0, 0, -1.57, 0, 1.57, 0]
 		robot1_joint_names = ['panda_1_joint1', 'panda_1_joint2', 'panda_1_joint3', 'panda_1_joint4', 'panda_1_joint5', 'panda_1_joint6', 'panda_1_joint7']
 		robot1_tool_link = 'panda_1_link8'
-		tool_closed = [0.025, 0.025]
+		tool_closed = [0.0, 0.0]
 		tool_open = [0.04, 0.04]
 		tool_name = 'robot_hand'
 		tool_joints = ['panda_1_finger_joint1', 'panda_1_finger_joint2']
-		# x:874 y:415, x:78 y:626
+		# x:1116 y:495, x:78 y:626
 		_state_machine = OperatableStateMachine(outcomes=['finished', 'failed'])
 		_state_machine.userdata.part_pose = []
 		_state_machine.userdata.pick_configuration = home1
@@ -76,7 +76,7 @@ class pickuppartfromconveyorSM(Behavior):
 										transitions={'reached': 'detect', 'planning_failed': 'failed', 'control_failed': 'failed'},
 										autonomy={'reached': Autonomy.Off, 'planning_failed': Autonomy.Off, 'control_failed': Autonomy.Off})
 
-			# x:612 y:330
+			# x:776 y:288
 			OperatableStateMachine.add('close',
 										Tool(move_group=tool_name, joint_name=tool_joints, tool_goal=tool_closed, action_topic='/move_group'),
 										transitions={'reached': 'move home', 'planning_failed': 'failed', 'control_failed': 'move home'},
@@ -89,7 +89,7 @@ class pickuppartfromconveyorSM(Behavior):
 										autonomy={'continue': Autonomy.Off, 'failed': Autonomy.Off},
 										remapping={'pose': 'object_pose'})
 
-			# x:689 y:482
+			# x:870 y:419
 			OperatableStateMachine.add('move home',
 										MoveitToJointsDynState(move_group=pick_group, action_topic='/move_group'),
 										transitions={'reached': 'finished', 'planning_failed': 'failed', 'control_failed': 'failed'},

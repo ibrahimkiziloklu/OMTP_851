@@ -1,0 +1,238 @@
+<?xml version="1.0" ?>
+<robot name="omtp"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- ==================================================== -->
+  <!-- INITIAL SETUP OF WORLD LINK                          -->
+  <!-- ==================================================== -->
+  <!-- world -->
+  <link name="world" />
+
+  <!-- world_interface. Makes it convenient to move the whole environment according to the world origin -->
+  <link name="world_interface"/>
+
+  <!-- world<->world_interface joint -->
+  <joint name="world_interface_to_world" type="fixed">
+    <parent link="world" />
+    <child link="world_interface" />
+  </joint>
+
+  <!-- ==================================================== -->
+  <!-- Fib14 building -->
+  <!-- ==================================================== -->
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/fib14/fib14.urdf.xacro"/>
+  <xacro:fib14_urdf fib14_parent="world_interface"/>
+
+  <!-- ==================================================== -->
+  <!-- Panda robot setup                                    -->
+  <!-- ==================================================== -->
+  <!-- Panda parameters -->
+  <xacro:arg name="arm_id" default="panda"/>
+  <xacro:arg name="use_cylinder_collision_model" default="true"/>
+  <xacro:arg name="use_gazebo_sim" default="true"/>
+  <xacro:arg name="parent" default="world_interface"/>
+
+  <!-- Insert Panda robot -->
+  <xacro:include filename="$(find franka_description)/robots/panda_arm_hand.urdf.xacro"/>
+  <xacro:panda_arm arm_id="$(arg arm_id)"
+                   connected_to="robot1_pedestal_link"
+                    xyz="0 0 0.95"
+                    rpy="0 0 0"
+                    safety_distance="0.03"/>
+
+  <xacro:hand ns="$(arg arm_id)"
+              rpy="0 0 ${-pi/4}" 
+              connected_to="$(arg arm_id)_link8"
+              safety_distance="0.03"/>
+
+  <!--Gazebo Control for Franka -->
+  <xacro:include filename="$(find franka_description)/robots/panda.gazebo.xacro"/>
+  <xacro:include filename="$(find franka_description)/robots/panda.control.xacro"/>
+  
+  <!-- arm -->
+  <xacro:arm_gazebo arm_id="$(arg arm_id)"/>
+  <xacro:arm_control arm_id="$(arg arm_id)"/>
+  <!-- hand-->
+  <xacro:hand_gazebo arm_id="$(arg arm_id)"/>
+  <xacro:hand_control arm_id="$(arg arm_id)"/>
+
+  <gazebo>
+      <plugin name="gazebo_ros_control" filename="libgazebo_ros_control.so"/>
+  </gazebo>
+
+
+  <!-- ROBOT PEDESTAL -->
+  <xacro:include filename="$(find omtp_support)/urdf/robot_pedestal/robot_pedestal.urdf.xacro"/>
+  <xacro:robot_pedestal_urdf pedestal_prefix="robot1_" pedestal_parent="world_interface" pedestal_height="0.95">
+    <origin xyz="-0.6 11.5 0.0" rpy="0 0 0"/>
+  </xacro:robot_pedestal_urdf>
+
+  <!-- Bins -->
+  <xacro:include filename="$(find omtp_support)/urdf/bin/bin.urdf.xacro"/>
+  <xacro:bin_urdf prefix="bin_1"/>
+  <xacro:bin_urdf prefix="bin_4"/>
+  <xacro:bin_urdf prefix="bin_5"/>
+
+  <!-- Bin 1 -->
+  <joint name="bin_1_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_1_base_link" />
+    <origin xyz="-1.5 10.4 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Bin 4 -->
+  <joint name="bin_4_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_4_base_link" />
+    <origin xyz="-2.3 7.4 0.0" rpy="0 0 0" />
+  </joint>
+
+  <!-- Bin 5 -->
+  <joint name="bin_5_joint" type="fixed">
+    <parent link="world_interface" />
+    <child link="bin_5_base_link" />
+    <origin xyz="0.0 12.2 0.0" rpy="0 0 ${-pi/2}" />
+  </joint>
+
+
+  <!-- Festo Modules -->
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_bypass_module/festo_bypass_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_bypass_1" festo_module_parent="world_interface">
+    <origin xyz="0.0 11.25 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_robot_1" festo_module_parent="world_interface">
+    <origin xyz="0.0 10.0 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+  
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_straight_1" festo_module_parent="world_interface">
+    <origin xyz="0.0 8.75 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:festo_module_urdf module_prefix="festo_straight_4" festo_module_parent="world_interface">
+    <origin xyz="-1.25 7.5 0.0" rpy="0 0 ${-pi/2}"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:festo_module_urdf module_prefix="festo_straight_2" festo_module_parent="world_interface">
+    <origin xyz="-0.0 6.25 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+  
+  <xacro:festo_module_urdf module_prefix="festo_straight_3" festo_module_parent="world_interface">
+    <origin xyz="0.0 5.0 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  <xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_t_module/festo_t_module.urdf.xacro"/>
+  <xacro:festo_module_urdf module_prefix="festo_t_1" festo_module_parent="world_interface">
+    <origin xyz="0.0 7.5 0.0" rpy="0 0 0"/>
+  </xacro:festo_module_urdf>
+
+  <!-- ==================================================== -->
+  <!-- 2D camera for Gazebo                                 -->
+  <!-- ==================================================== -->
+  <xacro:property name="camera_box_size" value="0.05" />
+  <!-- Size of square 'camera' box -->
+
+  <joint name="camera_joint" type="fixed">
+    <axis xyz="0 1 0" />
+    <origin xyz="0 0 1.2" rpy="0 0 0"/>
+    <parent link="world"/>
+    <child link="camera_link"/>
+  </joint>
+
+  <!-- Camera -->
+  <link name="camera_link">
+    <collision>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${camera_box_size} ${camera_box_size} ${camera_box_size}"/>
+      </geometry>
+    </collision>
+
+    <visual>
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <geometry>
+        <box size="${camera_box_size} ${camera_box_size} ${camera_box_size}"/>
+      </geometry>
+      <material name="red"/>
+    </visual>
+
+    <inertial>
+      <mass value="1e-5" />
+      <origin xyz="0 0 0" rpy="0 0 0"/>
+      <inertia ixx="1e-6" ixy="0" ixz="0" iyy="1e-6" iyz="0" izz="1e-6" />
+    </inertial>
+  </link>
+
+  <!-- Generate an optical frame http://www.ros.org/reps/rep-0103.html#suffix-frames
+      so that ros and opencv can operate on the camera frame correctly -->
+  <joint name="camera_optical_joint" type="fixed">
+    <!-- these values have to be these values otherwise the gazebo camera image
+        won't be aligned properly with the frame it is supposedly originating from -->
+    <origin xyz="0 0 0" rpy="${-pi/2} 0 ${-pi/2}"/>
+    <parent link="camera_link"/>
+    <child link="camera_link_optical"/>
+  </joint>
+
+  <link name="camera_link_optical">
+  </link>
+
+  <!-- Camera_link -->
+  <gazebo reference="camera_link">
+    <mu1>0.2</mu1>
+    <mu2>0.2</mu2>
+    <material>Gazebo/Red</material>
+  </gazebo>
+
+  <!-- Camera -->
+  <gazebo reference="camera_link">
+    <sensor type="camera" name="camera1">
+      <update_rate>30.0</update_rate>
+      <camera name="2d_camera_head">
+        <horizontal_fov>1.3962634</horizontal_fov>
+        <image>
+          <width>800</width>
+          <height>600</height>
+          <format>R8G8B8</format>
+        </image>
+        <clip>
+          <near>0.02</near>
+          <far>300</far>
+        </clip>
+        <noise>
+          <type>gaussian</type>
+          <!-- Noise is sampled independently per pixel on each frame.
+               That pixel's noise value is added to each of its color
+               channels, which at that point lie in the range [0,1]. -->
+          <mean>0.0</mean>
+          <stddev>0.007</stddev>
+        </noise>
+      </camera>
+      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
+        <alwaysOn>true</alwaysOn>
+        <updateRate>0.0</updateRate>
+        <cameraName>/camera1</cameraName>
+        <imageTopicName>image_raw</imageTopicName>
+        <cameraInfoTopicName>camera_info</cameraInfoTopicName>
+        <frameName>camera_link_optical</frameName>
+        <!-- setting hackBaseline to anything but 0.0 will cause a misalignment
+            between the gazebo sensor image and the frame it is supposed to
+            be attached to -->
+        <hackBaseline>0.0</hackBaseline>
+        <distortionK1>0.0</distortionK1>
+        <distortionK2>0.0</distortionK2>
+        <distortionK3>0.0</distortionK3>
+        <distortionT1>0.0</distortionT1>
+        <distortionT2>0.0</distortionT2>
+        <CxPrime>0</CxPrime>
+        <Cx>0.0</Cx>
+        <Cy>0.0</Cy>
+        <focalLength>0.0</focalLength>
+      </plugin>
+
+    </sensor>
+  
+  </gazebo>
+
+</robot>

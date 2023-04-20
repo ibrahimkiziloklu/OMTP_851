@@ -8,7 +8,7 @@
   <!-- Startup simulated world in Gazebo -->
   <!-- ==================================================== -->
   <include file="$(find gazebo_ros)/launch/empty_world.launch">
-    <arg name="world_name" default="$(find omtp_lecture3)/worlds/box_world.world"/>
+    <arg name="world_name" default="$(find omtp_lecture4)/worlds/box_world.world"/>
     <arg name="paused" value="$(arg paused)"/>
     <arg name="gui" value="$(arg gazebo_gui)"/>
     <arg name="debug" value="$(arg gazebo_debug)"/>
@@ -17,7 +17,7 @@
   <!-- ==================================================== -->
   <!-- Load universal robot description format (URDF) -->
   <!-- ==================================================== -->
-  <param name="robot_description" command="xacro  '$(find omtp_lecture3)/urdf/omtp_panda.urdf.xacro'"/>
+  <param name="robot_description" command="xacro  '$(find omtp_lecture4)/urdf/omtp_panda.urdf.xacro'"/>
 
   <!-- push robot_description to factory and spawn robot in gazebo at the origin, change x,y,z arguments to spawn in a different position -->
   <node name="spawn_gazebo_model"
