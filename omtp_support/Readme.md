@@ -26,7 +26,7 @@ Three bin models, imported from omtp_support/urdf/bin/bin.urdf.xacro.
  
 ## Usage
 
-$ roslaunch omtp_support visualize_omtp_factory.launch
+    $ roslaunch omtp_support visualize_omtp_factory.launch
 
 
 
@@ -41,12 +41,12 @@ For the end effector, a gripper has been added to the robot. The Gripper is adde
 
 
 ''' xacro
-<!-- Franka arm and hand XACRO model -->
-<xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
-<xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
-<!-- Vacuum Gripper1 -->
-<xacro:include filename="$(find hrwros_support)/urdf/vacuum_gripper/vacuum_gripper.urdf.xacro"/>
-<xacro:vacuum_gripper_urdf prefix="vacuum_gripper1_" joint_prefix="vacuum_gripper1_joint"/>
+    <!-- Franka arm and hand XACRO model -->
+    <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
+    <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
+    <!-- Vacuum Gripper1 -->
+    <xacro:include filename="$(find hrwros_support)/urdf/vacuum_gripper/vacuum_gripper.urdf.xacro"/>
+    <xacro:vacuum_gripper_urdf prefix="vacuum_gripper1_" joint_prefix="vacuum_gripper1_joint"/>
 '''
 
 ## Enviromental Models
