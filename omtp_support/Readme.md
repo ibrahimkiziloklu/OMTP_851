@@ -40,14 +40,14 @@ The robot is added to the main xacro file connected to the pedestal link.
 For the end effector, a gripper has been added to the robot. The Gripper is added to the main xacro file connected to the end effector link of the robot.Different kind of grippers can be added to the robot by changing the xacro file. Vacuum example is below:
 
 
-''' xacro
+
     <!-- Franka arm and hand XACRO model -->
     <xacro:include filename="$(find franka_description)/robots/panda_arm.xacro"/>
     <xacro:include filename="$(find franka_description)/robots/hand.xacro"/>
     <!-- Vacuum Gripper1 -->
     <xacro:include filename="$(find hrwros_support)/urdf/vacuum_gripper/vacuum_gripper.urdf.xacro"/>
     <xacro:vacuum_gripper_urdf prefix="vacuum_gripper1_" joint_prefix="vacuum_gripper1_joint"/>
-'''
+
 
 ## Enviromental Models
 
