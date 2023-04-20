@@ -26,9 +26,8 @@ Three bin models, imported from omtp_support/urdf/bin/bin.urdf.xacro.
  
 ## Usage
 
-''' sh
 $ roslaunch omtp_support visualize_omtp_factory.launch
-'''
+
 
 
 
