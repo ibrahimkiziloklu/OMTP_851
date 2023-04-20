@@ -4,16 +4,16 @@ In this file we implemented the several cameras to detect the object and move to
 
 ## Dependencies 
 
-  cmake_modules
-  gazebo_msgs
-  gazebo_plugins
-  gazebo_ros
-  geometry_msgs
-  message_generation
-  roscpp
-  std_msgs
-  std_srvs
-  tf
+    cmake_modules
+    gazebo_msgs
+    gazebo_plugins
+    gazebo_ros
+    geometry_msgs
+    message_generation
+    roscpp
+    std_msgs
+    std_srvs
+    tf
 
 ## Logical Camera
 
