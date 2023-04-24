@@ -3,6 +3,7 @@
 Via flexBE app we can create machines that does multiple tasks in a sequence without the need to hardcode them. Normally, This task is overcome using subscriber publisher nodes, and action service topics.
 
 ## Dependencies
+```sh
 catkin
 genmsg
 genpy
@@ -27,10 +28,11 @@ ros_environment
 rospack
 roslib
 rospy
-
+```
 ## Other Modules Needed
 
 You need to include the modules:
+```sh
 - flexbe_app
 - flexbe_behavior_engine
 - generic_flexbe_states
@@ -39,7 +41,7 @@ You need to include the modules:
 - aau_lab_ros_modules
 - franka_description
 - omtp_support
-
+```
 in your catkin workspace to be able to run the module. Remember to catkin build or catkin_make after adding the modules. Otherwise, flexbe app wont recognise the behaviors.
 
 ## Running the module
