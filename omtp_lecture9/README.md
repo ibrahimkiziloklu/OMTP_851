@@ -22,7 +22,7 @@ The following dependencies are required to run the script:
 - Python 3.6 or higher
 - OpenAI Gym
 - Stable Baselines 3
-- PyTorch
+- Tensorflow
 - TensorBoard (optional, for monitoring training progress)
 
 ## Installation
@@ -32,7 +32,7 @@ To install the required dependencies, you can use the following pip commands:
 ```
 pip install gym
 pip install stable-baselines3[extra]
-pip install torch
+pip install tensorflow
 pip install tensorboard
 ```
 In case you encounter the error "NameError: name 'glPushMatrix' is not defined", you can resolve it by installing version 1.5.27 of the `pyglet` library:
