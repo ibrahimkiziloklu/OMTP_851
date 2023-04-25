@@ -7,7 +7,7 @@ These readmes should contain detailed instructions on how to run the solution as
 
 ## Table of Contents 
 
-1. [omtp_lecture1/omtp_support](Readme.md)
+1. [OMTP_851/omtp_lecture1/omtp_support](Readme.md)
 2. [omtp_lecture2](Readme.md)
 3. [omtp_lecture3](Readme.md)
 4. [omtp_lecture4](Readme.md)
