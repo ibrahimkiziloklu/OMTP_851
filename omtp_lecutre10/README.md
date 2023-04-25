@@ -23,6 +23,7 @@ for i in range(50): # take 50 frames
     ... # other parts of the code
     frames.append(env.render(mode='rgb_array'))
 ... # other parts of the code
+imageio.mimwrite('random_agent.gif', frames)
 ```
 Here is the gif of the random agent:
 
@@ -32,7 +33,10 @@ Then we can train the agent with the following command:
 
 ```pyhton panda_reach_train_agent.py```
 This will train the for 200000 steps and saves the model in the current directory with the current in the name.
-With the same method, we can save the .gif and show the trained agent. Here is the gif of the trained agent for 200 steps:
+
+With the same method, we can save the .gif and test the agent. Here is the gif of the trained agent for 200 steps:
+
+```pyhton panda_reach_test_agent.py```
 
 ![Trained Agent](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecutre10/test_agent.gif)
 
@@ -42,6 +46,8 @@ We can also use tensorboard to see the training process. With same way as the pr
 tensorboard --logdir ./runs
 ```
 Then we can see the training process in the tensorboard. Here is the screenshot of the tensorboard:
+this tensorboard shows two trainingprocesses. One is for 200000 steps and the other one is for 100000 steps. We can see that the training process is converging to the goal.
+
 ![Tensorboard](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecutre10/tensorboard_lec10.png)
 
 ## References
