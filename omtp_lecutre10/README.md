@@ -25,7 +25,7 @@ for i in range(50): # take 50 frames
 ... # other parts of the code
 ```
 Here is the gif of the random agent:
-![Random Agent]()
+![Random Agent](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecutre10/random_agent.gif)
 Then we can train the agent with the following command:
 
 ```pyhton panda_reach_train_agent.py```
