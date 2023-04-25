@@ -1,6 +1,10 @@
 # OMTP_851
 OBJECT MANIPULATION AND TASK PLANNING  (OMTP)  - Group 851 Assignments and Project
 
+A specific readme for each lecture is to be found in each lecture's folder[1]
+These readmes should contain detailed instructions on how to run the solution as well as possible pictures of the solution in the environment
+
+
 Including : 
 
 Main Xacro file of factory for lecture 1 and lecture 2.
@@ -38,4 +42,6 @@ Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
          Kutay Shentyurk -
   	      Mahed Dadgostar -
   	      Victor Hagbard Bjørholm -
-
+         
+         
+[1] Each lecture will not necessarily have a seperate readme, but a readme has been supplied to each lecture where it was deemed necessary.
