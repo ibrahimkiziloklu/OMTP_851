@@ -25,11 +25,28 @@ for i in range(50): # take 50 frames
 ... # other parts of the code
 ```
 Here is the gif of the random agent:
+
 ![Random Agent](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecutre10/random_agent.gif)
+
 Then we can train the agent with the following command:
 
 ```pyhton panda_reach_train_agent.py```
 This will train the for 200000 steps and saves the model in the current directory with the current in the name.
+With the same method, we can save the .gif and show the trained agent. Here is the gif of the trained agent for 200 steps:
+
+![Trained Agent](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecutre10/test_agent.gif)
+
+## Tensorboard
+We can also use tensorboard to see the training process. With same way as the previous exercise, we can run the following command:
+```
+tensorboard --logdir ./runs
+```
+Then we can see the training process in the tensorboard. Here is the screenshot of the tensorboard:
+![Tensorboard](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecutre10/tensorboard_lec10.png)
+
+## References
+[1] [Reinforcement Learning with the Franka Panda robot pybullet simulation](https://github.com/simonbogh/rl_panda_gym_pybullet_exampleher%20Panda-Gym)
+
 
 
 
