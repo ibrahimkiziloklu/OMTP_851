@@ -157,7 +157,7 @@ def logical_camera_callback(data):
             current_pose = robot_arm_group.get_current_pose()
             new_eef_pose.position.x = object_world_pose.pose.position.x
             new_eef_pose.position.y = object_world_pose.pose.position.y
-            new_eef_pose.position.z = object_world_pose.pose.position.z + 0.225
+            new_eef_pose.position.z = object_world_pose.pose.position.z + 0.12
 
             new_eef_pose.orientation = copy.deepcopy(current_pose.pose.orientation)
 
@@ -214,7 +214,6 @@ def logical_camera_callback(data):
             new_eef_pose.orientation = copy.deepcopy(current_pose.pose.orientation)
 
             waypoints.append(new_eef_pose)
-            print(new_eef_pose.orientation)
 
             fraction = 0.0
             for count_cartesian_path in range(3):
@@ -231,6 +230,14 @@ def logical_camera_callback(data):
             robot_arm_goal.trajectory = plan_cartesian
             robot_arm_client.send_goal(robot_arm_goal)
             robot_arm_client.wait_for_result()
+
+            robot_hand_group.set_named_target("tool_open")
+            plan_success, robot_hand_plan_place, planning_time, error_code = robot_hand_group.plan()
+            robot_hand_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_hand_goal.trajectory = robot_hand_plan_place
+            robot_hand_client.send_goal(robot_hand_goal)
+            robot_hand_client.wait_for_result()
+            print("tool open")
 
             robot_hand_group.set_named_target("tool_open")
             plan_success, robot_hand_plan_place, planning_time, error_code = robot_hand_group.plan()
