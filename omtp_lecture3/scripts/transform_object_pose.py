@@ -67,20 +67,10 @@ def logical_camera_callback(data):
             robot_arm_client.wait_for_server()
             rospy.loginfo("Execute trajectory server is available for robot_arm")
 
-
-            # robot_arm_group.set_named_target("robot_up")
-            # robot_arm_plan_home = robot_arm_group.plan()
-            # robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
-            # robot_arm_goal.trajectory = robot_arm_plan_home
-            # robot_arm_client.send_goal(robot_arm_goal)
-            # robot_arm_client.wait_for_result()
-
-            robot_arm_group.set_named_target("robot_ready")
-            plan_success, robot_arm_plan_pregrasp, planning_time, error_code = robot_arm_group.plan()
-            robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
-            robot_arm_goal.trajectory = robot_arm_plan_pregrasp
-            robot_arm_client.send_goal(robot_arm_goal)
-            robot_arm_client.wait_for_result()
+            robot_hand_client = actionlib.SimpleActionClient(
+                'execute_trajectory', moveit_msgs.msg.ExecuteTrajectoryAction)
+            robot_hand_client.wait_for_server()
+            rospy.loginfo("Execute trajectory server is available for robot_arm")
 
             # Create a pose stamped message type from the camera image topic.
             object_pose = geometry_msgs.msg.PoseStamped()
@@ -115,22 +105,116 @@ def logical_camera_callback(data):
             print('========================================')
             print('Successfully transformed pose.')
 
-            # cartesian coordinates
-            waypoints = []
 
-            current_pose = robot_arm_group.get_current_pose()
+
+            robot_arm_group.set_named_target("robot_ready")
+            plan_success, robot_arm_plan_pregrasp, planning_time, error_code = robot_arm_group.plan()
+            robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_arm_goal.trajectory = robot_arm_plan_pregrasp
+            robot_arm_client.send_goal(robot_arm_goal)
+            robot_arm_client.wait_for_result()
+            print("ready")
+
+            # cartesian coordinates
+            robot_hand_group.set_named_target("tool_open")
+            plan_success, robot_hand_plan_place, planning_time, error_code = robot_hand_group.plan()
+            robot_hand_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_hand_goal.trajectory = robot_hand_plan_place
+            robot_hand_client.send_goal(robot_hand_goal)
+            robot_hand_client.wait_for_result()
+            print("tool open")
+
             rospy.sleep(0.5)
             current_pose = robot_arm_group.get_current_pose()
-
             new_eef_pose = geometry_msgs.msg.Pose()
             new_eef_pose.position.x = object_world_pose.pose.position.x
             new_eef_pose.position.y = object_world_pose.pose.position.y
-            new_eef_pose.position.z = object_world_pose.pose.position.z
+            new_eef_pose.position.z = object_world_pose.pose.position.z + 0.5
+
+            new_eef_pose.orientation = copy.deepcopy(current_pose.pose.orientation)
+
+            waypoints = []
+            waypoints.append(new_eef_pose)
+
+            fraction = 0.0
+            for count_cartesian_path in range(3):
+                if fraction < 1.0:
+                    plan_cartesian, fraction = robot_arm_group.compute_cartesian_path(
+                        waypoints,
+                        0.01, # eef_step
+                        0.0   #jump threshold
+                    )
+                else:
+                    break
+            
+            robot_arm_goal2 = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_arm_goal2.trajectory = plan_cartesian
+            robot_arm_client.send_goal(robot_arm_goal2)
+            robot_arm_client.wait_for_result()
+            print("in position with offsett")
+
+            rospy.sleep(0.5)
+            current_pose = robot_arm_group.get_current_pose()
+            new_eef_pose.position.x = object_world_pose.pose.position.x
+            new_eef_pose.position.y = object_world_pose.pose.position.y
+            new_eef_pose.position.z = object_world_pose.pose.position.z + 0.225
+
+            new_eef_pose.orientation = copy.deepcopy(current_pose.pose.orientation)
+
+            waypoints = []
+            waypoints.append(new_eef_pose)
+
+            fraction = 0.0
+            for count_cartesian_path in range(3):
+                if fraction < 1.0:
+                    plan_cartesian, fraction = robot_arm_group.compute_cartesian_path(
+                        waypoints,
+                        0.01, # eef_step
+                        0.0   #jump threshold
+                    )
+                else:
+                    break
+            
+            robot_arm_goal2 = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_arm_goal2.trajectory = plan_cartesian
+            robot_arm_client.send_goal(robot_arm_goal2)
+            rospy.sleep(0.5)
+            robot_arm_client.wait_for_result()
+            print("in position")
+
+            robot_hand_group.set_named_target("tool_closed")
+            plan_success, robot_hand_plan_place1, planning_time, error_code = robot_hand_group.plan()
+            robot_hand_goal1 = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_hand_goal1.trajectory = robot_hand_plan_place1
+
+            robot_hand_client.send_goal(robot_hand_goal1)
+            rospy.sleep(0.5)
+            print("grasping")
+            robot_hand_client.wait_for_result()
+            print("closed")
+
+
+            robot_arm_group.set_named_target("robot_ready")
+            plan_success, robot_arm_plan_pregrasp, planning_time, error_code = robot_arm_group.plan()
+            robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_arm_goal.trajectory = robot_arm_plan_pregrasp
+            robot_arm_client.send_goal(robot_arm_goal)
+            robot_arm_client.wait_for_result()
+            print("ready")
+
+            waypoints = []
+
+            current_pose = robot_arm_group.get_current_pose()
+
+            new_eef_pose = geometry_msgs.msg.Pose()
+            new_eef_pose.position.x = current_pose.pose.position.x
+            new_eef_pose.position.y = current_pose.pose.position.y + 0.5
+            new_eef_pose.position.z = current_pose.pose.position.z 
 
             new_eef_pose.orientation = copy.deepcopy(current_pose.pose.orientation)
 
             waypoints.append(new_eef_pose)
-            waypoints.append(current_pose.pose)
+            print(new_eef_pose.orientation)
 
             fraction = 0.0
             for count_cartesian_path in range(3):
@@ -147,15 +231,15 @@ def logical_camera_callback(data):
             robot_arm_goal.trajectory = plan_cartesian
             robot_arm_client.send_goal(robot_arm_goal)
             robot_arm_client.wait_for_result()
-            print("ok")
 
-            # robot_arm_group.set_named_target("robot_ready")
-            # robot_arm_plan_place = robot_arm_group.plan()
-            # robot_arm_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
-            # robot_arm_goal.trajectory = robot_arm_plan_place
+            robot_hand_group.set_named_target("tool_open")
+            plan_success, robot_hand_plan_place, planning_time, error_code = robot_hand_group.plan()
+            robot_hand_goal = moveit_msgs.msg.ExecuteTrajectoryGoal()
+            robot_hand_goal.trajectory = robot_hand_plan_place
+            robot_hand_client.send_goal(robot_hand_goal)
+            robot_hand_client.wait_for_result()
+            print("tool open")
 
-            # robot_arm_client.send_goal(robot_arm_goal)
-            # robot_arm_client.wait_for_result()
 
             moveit_commander.roscpp_shutdown()
 
