@@ -91,3 +91,15 @@ def main():
 ```    
     
 ## Tensorboard
+
+To monitor the training progress, you can use TensorBoard. To start TensorBoard, run the following command in the terminal:
+
+```
+tensorboard --logdir logs
+```
+
+Then open the following URL in your browser:
+
+```
+http://localhost:6006
+```

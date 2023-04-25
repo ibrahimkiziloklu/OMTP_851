@@ -1,5 +1,5 @@
 # README
-For the installation of this exercise, we refer you to this [Reinforcement Learning with the Franka Panda robot pybullet simulation](https://github.com/simonbogh/rl_panda_gym_pybullet_exampleher%20Panda-Gym) repository.
+For the installation of this exercise, we refer you to this [Reinforcement Learning with the Franka Panda robot pybullet simulation](https://github.com/simonbogh/rl_panda_gym_pybullet_example) repository.
 In order to save a .gif of the simulation, you need to install the ```imageio``` package:
 ```
 pip install imageio
