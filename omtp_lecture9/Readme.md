@@ -103,3 +103,6 @@ Then open the following URL in your browser:
 ```
 http://localhost:6006
 ```
+This is how the Tensorboard looks like:
+
+![Tensorboard](https://github.com/ibrahimkiziloklu/OMTP_851/blob/main/omtp_lecture9/tensorboard_lecture9.png)
