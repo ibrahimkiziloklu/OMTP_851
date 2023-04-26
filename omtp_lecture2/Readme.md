@@ -59,3 +59,9 @@ Our pick and place script is written in python and it is located in the omtp_lec
 
     $ rosrun omtp_lecture2 pick_and_place.py
 
+Before running the code one needs to start the roscore with the omtp factory:
+
+    $ roslaunch omtp_lecture2 omtp_moveit_gazebo.launch
+    
+Also one thing to note is that one needs to hardcode the position of the banana since we do not have a sensor to tell the robot where it is.
+

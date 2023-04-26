@@ -28,3 +28,13 @@ The detected box object's pose is transformed from the logical_camera1_frame coo
 ## 2d Camera 
 For the real world application 2d camera has been integrated into the xacro file of the factory environment. The camera is placed on top of the conveyor belt and it is looking at the conveyor and the objects on top of it.The 2D camera is mounted on a fixed joint and provides a view of the workspace. The camera publishes images on the /camera1/image_raw topic and camera information on the /camera1/camera_info topic. 
 
+## Initialization
+Our pick and place script is written in python and it is located in the omtp_lecture3/scripts folder. The script is executed with the following command:
+
+    $ rosrun omtp_lecture3 transform_object_pose.py
+
+Before running the code one needs to start the roscore with the omtp factory:
+
+    $ roslaunch omtp_lecture3 omtp_lecture3.launch
+    
+
