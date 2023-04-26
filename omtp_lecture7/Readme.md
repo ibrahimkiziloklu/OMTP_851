@@ -83,3 +83,6 @@ This Python script demonstrates the use of Dynamic Movement Primitives (DMPs) in
 This script will open a mujoco simulation with a franka robot.The robot joints will be controlled to move like a JTrajectory.csv file using DMP.
 
     Exercise3_demo_DMP_franka.py 
+
+
+Outputs of the exercises are in the omtp_lecture7/Exercise_Outputs . 
