@@ -18,9 +18,9 @@ These readmes should contain detailed instructions on how to run the solution as
 
 
 Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
-         Kutay Shentyurk -
-  	      Mahed Dadgostar -
-  	      Victor Hagbard Bjørholm -
+         Kutay Shentyurk - kshent22@student.aau.dk
+  	Mahed Dadgostar - 
+  	Victor Hagbard Bjørholm -
          
          
 [1] Each lecture will not necessarily have a seperate readme, but a readme has been supplied to each lecture where it was deemed necessary.
