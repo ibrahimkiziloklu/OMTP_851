@@ -1,0 +1,7 @@
+use robot_arm
+go robot_ready
+go down 0.1
+use robot_hand
+go tool_open
+use robot_arm
+go up 0.2
