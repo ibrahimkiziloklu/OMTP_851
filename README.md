@@ -14,6 +14,7 @@ These readmes should contain detailed instructions on how to run the solution as
 5. [omtp_lecture5](omtp_lecture5/Readme.md)
 7. [omtp_lecture7](omtp_lecture7/Readme.md)
 9. [omtp_lecture9](omtp_lecture9/Readme.md)
+10.[omtp_lecture10](omtp_lecture10/Readme.md)
 
 
 Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
