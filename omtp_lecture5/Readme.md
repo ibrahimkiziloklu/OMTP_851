@@ -1,105 +1,71 @@
-# AAU Lab 3D models for ROS #
+# CNN in Practical Robotic Applications
 
-AAU Lab 3D models for ROS.
+This repository contains the code for the lecture 5 of the course . We will use the 2d camera to for detection and apply the yolov3 algorithm to detect the objects on the conveyor belt. The 2d camera is mounted on a fixed joint and provides a view of the workspace. The camera publishes images on the /camera1/image_raw topic and camera information on the /camera1/camera_info topic.
 
-* Fib14 lab
-* Festo straight module
-* Festo T-module
-* Festo bypass module
-* Festo robot module
-* Festo pallet and product
-
-## Current models
----
-Example that visualizes the lab and models:
-```sh
-$ roslaunch aau_lab_ros_models view_model_rviz.launch
+## Prerequisites
+The prequisites for this package is inside the [requirements.txt](requirements.txt) file. To install them, navigate to the root of the package and r:
+```
+$ sudo pip install -r requirements.txt
 ```
 
-All model are attached to a link called `world_interface`, so all models can easily be moved at once together.
+    PyTorch 
+    OpenCV
+    torchvision
+    skimage
+    NumPy
+    SciPy
+    rospkg
+    Gazebo
+    MoveIt!
+    xacro
+    joint_state_publisher
+    robot_state_publisher
+    topic_tools
 
-```xml
-<!-- world and world_interface links -->
-<link name="world" />
-<link name="world_interface"/>
-
-<!-- Joint between world and world_interface -->
-<joint name="world_interface_to_world" type="fixed">
-    <parent link="world" />
-    <child link="world_interface" />
-</joint>
+## Installation
+Navigate to your catkin workspace and run:
+```
+$ catkin build omtp_lecture5
+$ catkin build yolov3_pytorch_ros
+```
+## Configuration
+1. First, make sure to put your weights in the [models](models) folder. For the **training process** in order to use custom objects, please refer to the original [YOLO page](https://pjreddie.com/darknet/yolo/). As an example, to download pre-trained weights from the COCO data set, go into the [models](models) folder and run:
+```
+wget http://pjreddie.com/media/files/yolov3.weights
 ```
 
-### Fib14 building
----
-![Fib14](./docs/fib14.jpg)
+2. Modify the parameters in the [launch file](launch/detector.launch) and launch it. You will need to change the `image_topic` parameter to match your camera, and the `weights_name`, `config_name` and `classes_name` parameters depending on what you are trying to do.
 
-```xml
-<!-- Fib14 -->
-<xacro:include filename="$(find aau_lab_ros_models)/urdf/fib14/fib14.urdf.xacro"/>
-<xacro:fib14_urdf fib14_parent="world_interface"/>
-```
+## Factory Launch File 
 
-### Festo Straight Module
----
-![Festo module](./docs/festo_straight_module.jpg)
+The provided launch file omtp_lecture5.launch sets up the following components:
+Gazebo world: Loads the yolo_world.world file containing the simulation environment.
+Robot description: Loads the robot's URDF (Universal Robot Description Format) file omtp_panda5.urdf.xacro.
 
-```xml
-<!-- Festo straight module -->
-<xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_straight_module/festo_straight_module.urdf.xacro"/>
-<xacro:festo_module_urdf module_prefix="module4_" festo_module_parent="world_interface">
-    <origin xyz="0.0 6.6 0.0" rpy="0 0 0.0"/>
-</xacro:festo_module_urdf>
-```
 
-### Festo T-Module
----
-![Festo module](./docs/festo_T_module.jpg)
+    $ roslaunch omtp_lecture5 omtp_lecture5.launch
 
-```xml
-<!-- Festo t-module -->
-<xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_t_module/festo_t_module.urdf.xacro"/>
-<xacro:festo_module_urdf module_prefix="module2_" festo_module_parent="world_interface">
-    <origin xyz="0.0 4.2 0.0" rpy="0 0 0.0"/>
-</xacro:festo_module_urdf>
 
-```
 
-### Festo Bypass Module
----
-![Festo module](./docs/festo_bypass_module.jpg)
+## Start yolov3_pytorch_ros node
 
-```xml
-<!-- Festo bypass module -->
-<xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_bypass_module/festo_bypass_module.urdf.xacro"/>
-<xacro:festo_module_urdf module_prefix="module7_" festo_module_parent="world_interface">
-    <origin xyz="-2.22 4.2 0.0" rpy="0 0 ${pi/2.0}"/>
-</xacro:festo_module_urdf>
-```
+Make sure that detector.py is executable by navigating to the src folder and typing
 
-### Festo Robot Module
----
-![Festo module](./docs/festo_robot_module.jpg)
+    $ chmod +x detector.py
 
-```xml
-<!-- Festo robot module -->
-<xacro:include filename="$(find aau_lab_ros_models)/urdf/festo_robot_module/festo_robot_module.urdf.xacro"/>
-<xacro:festo_module_urdf module_prefix="module3_" festo_module_parent="world_interface">
-    <origin xyz="0.0 5.4 0.0" rpy="0 0 0.0"/>
-</xacro:festo_module_urdf>
-```
 
-### Festo Pallet and Product (todo)
----
+then run the node with
 
-## Additional models for Gazebo
----
-You can find more 3D models at the following links. They are set up for use in Gazebo SDF-files, but the CAD-files and textures can be adapted to URDF/XACRO-files for use in ROS.
+    $ roslaunch yolov3_pytorch_ros detector.launch
 
-* https://app.ignitionrobotics.org/fuel/models
-* https://github.com/osrf/gazebo_models
-* http://data.nvision2.eecs.yorku.ca/3DGEMS/
+The node will subscribe to the specified image topic, process the images using the YOLOv3 model, and publish the detected bounding boxes and visualization of the detections.
 
----
-## Who do I talk to? ###
-* Simon Bøgh ([sb@mp.aau.dk](mailto:sb@mp.aau.dk))
+## Usage
+
+The node subscribes to an image topic (default: /camera/rgb/image_raw) and listens for incoming image messages.
+
+When an image message is received, the imageCb function is called to process the image, detect objects using the YOLOv3 model, and publish the detected bounding boxes and visualization.
+
+The detected bounding boxes are published as BoundingBoxes messages to the specified topic (default: /detected_objects).
+
+The visualization of the detections is published as an Image message to the specified topic (default: /detections_image) if the publish_image parameter is set to True.
