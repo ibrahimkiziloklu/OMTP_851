@@ -7,7 +7,7 @@ These readmes should contain detailed instructions on how to run the solution as
 
 ## Table of Contents 
 
-1. [omtp_lecture1](omtp_lecture1/omtp_support/Readme.md)
+1. [omtp_lecture1](omtp_lecture1/Readme.md)
 2. [omtp_lecture2](omtp_lecture2/Readme.md)
 3. [omtp_lecture3](omtp_lecture3/Readme.md)
 4. [omtp_lecture4](omtp_lecture4/Readme.md)
@@ -19,8 +19,8 @@ These readmes should contain detailed instructions on how to run the solution as
 
 Authors: İbrahim Doruk Kızıloklu - ikizil22@student.aau.dk
          Kutay Shentyurk - kshent22@student.aau.dk
-  	Mahed Dadgostar - 
-  	Victor Hagbard Bjørholm -
+  	Mahed Dadgostar - mdadgo22@student.aau.dk
+  	Victor Hagbard Bjørholm - vbjarh19@student.aau.dk
          
          
 [1] Each lecture will not necessarily have a seperate readme, but a readme has been supplied to each lecture where it was deemed necessary.
